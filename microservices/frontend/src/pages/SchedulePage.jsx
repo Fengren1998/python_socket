@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import BookingForm from '../components/Forms/BookingForm';
+import BookingTable from '../components/Tables/BookingTable';
 
 const styles = () => ({
   header: {
@@ -37,6 +38,7 @@ const SchedulePage = (props) => {
         <Typography className={classes.header} variant="h4">
           Available Times
         </Typography>
+        <BookingTable />
       </div>
     </div>
   );

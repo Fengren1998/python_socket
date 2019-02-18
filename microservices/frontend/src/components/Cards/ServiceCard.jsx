@@ -18,7 +18,7 @@ const styles = {
   },
 };
 
-function ServiceCard(props) {
+const ServiceCard = (props) => {
   const { classes } = props;
   return (
     <Card className={classes.card}>
@@ -44,7 +44,7 @@ function ServiceCard(props) {
       </CardActions>
     </Card>
   );
-}
+};
 
 ServiceCard.propTypes = {
   classes: PropTypes.object.isRequired,

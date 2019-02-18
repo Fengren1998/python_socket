@@ -7,7 +7,7 @@ const router = express.Router();
 
 const saltRounds = 10;
 
-router.post('/', /*verify.admin,*/ async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
         const {
             firstName,
