@@ -25,7 +25,7 @@ const App = () => (
         <Navbar />
         <Switch>
           <UnauthenticatedRoute redirect="/services" path="/login" component={LoginPage} />
-          <UnauthenticatedRoute redirect="/login" path="/register" component={RegisterPage} />
+          <Route path="/register" component={RegisterPage} />
           <AuthenticatedRoute redirect="/login" path="/email-verification" component={EmailVerificationPage} />
           <AuthenticatedRoute redirect="/login" path="/reservation" component={SchedulePage} />
           <AuthenticatedRoute redirect="/login" path="/services/add" component={ServicesAddPage} />

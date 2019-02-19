@@ -3,8 +3,8 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
     host: 'email-smtp.us-west-2.amazonaws.com',
     auth: {
-        user: 'AKIAIFJ424JKNO4RFXYA',
-        pass: 'Au/V0iwDWokMLzlhST/s/kIraNph24tYDySTRscRUUwt',
+        user: 'AKIAI2XQXVWXUCVZEF4Q',
+        pass: 'BL196zAWhR0BlcKfhMcfVpaKN1yKNaThoS1cGdVR6F2j',
     },
 });
 

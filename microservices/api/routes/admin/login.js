@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
     const { user } = req;
 
-    if (!user) {
+    if (!user || !user.type === 'admin') {
         res.send({ isLoggedIn: false });
     } else {
         res.send({ isLoggedIn: true, type: 'admin' });

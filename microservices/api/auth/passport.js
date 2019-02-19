@@ -5,19 +5,34 @@ const axios = require('./../config/axios');
 
 const configure = (passport) => {
     passport.serializeUser((user, done) => {
-        done(null, user.id);
+        done(null, user);
     });
 
-    passport.deserializeUser((id, done) => {
-        axios.db.get(`http://db-cli:5001/users/${id}`).then((res) => {
-            const user = res.data;
+    passport.deserializeUser((user, done) => {
+        const { id, type } = user;
+        if (type === 'user') {
+            axios.db.get(`/users/${id}`).then((res) => {
+                const user = res.data;
+                user.type = 'user';
+    
+                if (!user) {
+                    throw new Error('User does not exist.');
+                }
+    
+                return done(null, user);
+            }).catch(err => done(err));
+        } else if (type === 'admin') {
+            axios.db.get(`/admins/${id}`).then((res) => {
+                const user = res.data;
+                user.type = 'admin'
 
-            if (!user) {
-                throw new Error('User does not exist.');
-            }
+                if (!user) {
+                    throw new Error('User does not exist.');
+                }
 
-            return done(null, user);
-        }).catch(err => done(err));
+                return done(null, user);
+            }).catch(err => done(err));
+        }
     });
 
     passport.use('user', new LocalStrategy({
@@ -26,7 +41,7 @@ const configure = (passport) => {
     },
     (email, password, done) => {
         axios.db.get(
-            'http://db-cli:5001/users/email',
+            '/users/email',
             {
                 params: {
                     email,
@@ -34,6 +49,7 @@ const configure = (passport) => {
             },
         ).then((userRes) => {
             const user = userRes.data;
+            user.type = 'user';
 
             if (!Object.keys(user).length) {
                 return done(null, false);
@@ -54,7 +70,7 @@ const configure = (passport) => {
     },
     (email, password, done) => {
         axios.db.get(
-            'http://db-cli:5001/admins/email',
+            '/admins/email',
             {
                 params: {
                     email,
@@ -62,6 +78,7 @@ const configure = (passport) => {
             },
         ).then((adminRes) => {
             const admin = adminRes.data;
+            admin.type = 'admin';
 
             if (!Object.keys(admin).length) {
                 return done(null, false);
