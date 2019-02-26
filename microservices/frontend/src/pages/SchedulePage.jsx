@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment-timezone';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import BookingForm from '../components/Forms/BookingForm';
-import BookingTable from '../components/Tables/BookingTable';
+import BookingTable from '../containers/Tables/BookingTable';
 
 const styles = () => ({
   header: {
@@ -24,25 +25,40 @@ const styles = () => ({
   },
 });
 
-const SchedulePage = (props) => {
-  const { classes } = props;
-  return (
-    <div className={classes.layout}>
-      <div className={classes.container}>
-        <Typography className={classes.header} variant="h4">
-          Book Your Space Now!
-        </Typography>
-        <BookingForm />
+class SchedulePage extends Component {
+  constructor() {
+    super();
+    this.state = {
+      date: moment().format('YYYY-MM-DD'),
+    };
+    this.handleDateChange = this.handleDateChange.bind(this);
+  }
+
+  handleDateChange(date) {
+    this.setState({ date: moment(date).format('YYYY-MM-DD') });
+  }
+
+  render() {
+    const { classes } = this.props;
+    const { date } = this.state;
+    return (
+      <div className={classes.layout}>
+        <div className={classes.container}>
+          <Typography className={classes.header} variant="h4">
+            Book Your Space Now!
+          </Typography>
+          <BookingForm handleDateChange={this.handleDateChange} />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.header} variant="h4">
+            Available Times
+          </Typography>
+          <BookingTable date={date} />
+        </div>
       </div>
-      <div className={classes.container}>
-        <Typography className={classes.header} variant="h4">
-          Available Times
-        </Typography>
-        <BookingTable />
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 SchedulePage.propTypes = {
   classes: PropTypes.object.isRequired,

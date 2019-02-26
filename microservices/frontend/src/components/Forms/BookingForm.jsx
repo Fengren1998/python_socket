@@ -47,7 +47,7 @@ class BookingForm extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, handleDateChange } = this.props;
     const { selectedService } = this.state;
     return (
       <form
@@ -87,6 +87,7 @@ class BookingForm extends Component {
             shrink: true,
           }}
           fullWidth
+          onChange={e => handleDateChange(e.target.value)}
         />
         <TextField
           name="startTime"
@@ -132,6 +133,7 @@ class BookingForm extends Component {
 
 BookingForm.propTypes = {
   classes: PropTypes.object.isRequired,
+  handleDateChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(BookingForm);

@@ -19,13 +19,12 @@ router.get('/', verify.user, async (req, res, next) => {
 router.post('/', verify.user, async (req, res, next) => {
     try {
         const {
-            user_id,
             service_id,
             duration,
             date_reserved,
         } = req.body;
         const reservation = await axios.db.post('/reservations', {
-            user_id,
+            user_id: req.user.id,
             service_id,
             duration,
             date_reserved,
