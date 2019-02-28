@@ -14,6 +14,7 @@ const loginRouter = require('./routes/user/login');
 const logoutRouter = require('./routes/user/logout');
 const registerRouter = require('./routes/user/register');
 const reservationRouter = require('./routes/user/reservation');
+const serviceRouter = require('./routes/user/services');
 
 const adminEmailVerificationRouter = require('./routes/admin/email-verification');
 const adminLoginRouter = require('./routes/admin/login');
@@ -46,6 +47,7 @@ app.use('/user/login', loginRouter);
 app.use('/user/logout', logoutRouter);
 app.use('/user/register', registerRouter);
 app.use('/user/reservation', reservationRouter);
+app.use('/user/services', serviceRouter);
 
 app.use('/admin/email-verification', adminEmailVerificationRouter);
 app.use('/admin/login', adminLoginRouter);

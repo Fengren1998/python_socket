@@ -6,6 +6,7 @@ import forgotPasswordReducer from './forgotPasswordReducer';
 import loginReducer from './loginReducer';
 import registerReducer from './registerReducer';
 import reservationReducer from './reservationReducer';
+import servicesReducer from './servicesReducer';
 
 const reducers = combineReducers({
   emailVerificationProcessing: emailVerificationProcessingReducer,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   login: loginReducer,
   register: registerReducer,
   reservation: reservationReducer,
+  services: servicesReducer,
 });
 
 export default reducers;

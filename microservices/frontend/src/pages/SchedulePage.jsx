@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment-timezone';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import BookingForm from '../components/Forms/BookingForm';
+import BookingForm from '../containers/Forms/BookingForm';
 import BookingTable from '../containers/Tables/BookingTable';
 
 const styles = () => ({
