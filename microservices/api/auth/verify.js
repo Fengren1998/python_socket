@@ -8,7 +8,6 @@ const user = (req, res, next) => {
 };
 
 const admin = async (req, res, next) => {
-    console.log(req.user);
     try {
         const adminAccount = await axios.db.get('/admins/email', {
             params: {

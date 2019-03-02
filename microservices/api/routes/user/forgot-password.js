@@ -6,7 +6,6 @@ const router = express.Router();
 router.post('/', async (req, res, next) => {
     try {
         const { email } = req.body;
-        console.log('hello');
 
         const hash = await axios.db.post('/forgot-password-hash', { email });
         await axios.emailer.post('/forgot-password', { email, hash: hash.data.hash });

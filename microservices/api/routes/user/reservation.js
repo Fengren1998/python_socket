@@ -26,38 +26,42 @@ router.post('/', verify.user, async (req, res, next) => {
             date_reserved,
         } = req.body;
         let ongoingReservations = await axios.db.get('/reservations', {
-            include_deleted: false,
-            is_confirmed: true,
+            params: {
+                include_deleted: false,
+                is_confirmed: true,
+            },
         });
 
         ongoingReservations = ongoingReservations.data ? ongoingReservations.data : [];
         ongoingReservations.map(r => {
             if (
-                moment(date_reserved) >= moment(r.date_reserved)
-                && (
-                    moment(date_reserved) <=
-                    moment(r.date_reserved).add(r.duration, 'hours')
+                (
+                    moment(date_reserved) >= moment(r.date_reserved)
+                    && (
+                        moment(date_reserved) <=
+                        moment(r.date_reserved).add(r.duration, 'hours')
+                    ) ||
+                    moment(date_reserved).add(duration, 'hours') >= moment(r.date_reserved)
+                    && (
+                        moment(date_reserved).add(duration, 'hours') <=
+                        moment(r.date_reserved).add(r.duration, 'hours')
+                    )
                 )
                 && r.service_id == service_id
             ) {
                 throw new Error('Chosen time is unavailable');
             }
         })
-        console.log({
-            user_id: req.user.id,
-            service_id,
-            duration,
-            date_reserved,
-        });
         const reservation = await axios.db.post('/reservations', {
             user_id: req.user.id,
             service_id,
             duration,
             date_reserved,
+            is_confirmed: false,
         });
         res.send(reservation.data);
     } catch (error) {
-        next(error);
+        res.status(400).send(error.message);
     }
 });
 

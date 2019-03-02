@@ -67,7 +67,10 @@ class BookingForm extends Component {
     addReservation(
       parseInt(event.target.service.value, 10),
       parseInt(event.target.duration.value, 10),
-      moment(`${event.target.bookDate.value} ${event.target.startTime.value}`),
+      moment(
+        `${event.target.bookDate.value} ${event.target.startTime.value}`,
+        'YYYY-MM-DD HH:mm',
+      ),
     );
   }
 
@@ -85,12 +88,12 @@ class BookingForm extends Component {
       <Fragment>
         {error && (
           <Typography variant="subtitle2" color="error" gutterBottom>
-            {error}
+            {'Chosen time unavailable'}
           </Typography>
         )}
         {success && (
           <Typography className={classes.success} variant="subtitle2" gutterBottom>
-            Customer successfully added.
+            Booking successfully requested.
           </Typography>
         )}
         {services ? (
