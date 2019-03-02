@@ -10,13 +10,16 @@ from src.schemas.reservation import ReservationSchema
 
 class Reservations(Resource):
     get_args = {
-        'include_deleted': fields.Boolean(missing=False)
+        'include_deleted': fields.Boolean(missing=False),
+        'is_confirmed': fields.Boolean(missing=False)
     }
     @use_args(get_args)
     def get(self, args):
         include_deleted = args['include_deleted']
+        is_confirmed = args['is_confirmed']
         reservations = ReservationHandler().get_all_reservations(
-            include_deleted
+            include_deleted,
+            is_confirmed,
         )
 
         result = ReservationSchema().dump(reservations, many=True).data
@@ -27,8 +30,8 @@ class Reservations(Resource):
         'service_id': fields.Integer(required=True),
         'duration': fields.Integer(required=True),
         'date_reserved': fields.DateTime(required=True),
-        'is_finished': fields.Boolean(),
-        'is_confirmed': fields.Boolean()
+        'is_finished': fields.Boolean(missing=None),
+        'is_confirmed': fields.Boolean(missing=None)
     }
 
     @use_args(post_args)

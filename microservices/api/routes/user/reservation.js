@@ -1,4 +1,5 @@
 const express = require('express');
+const moment = require('moment-timezone')
 const verify = require('./../../auth/verify');
 const axios = require('./../../config/axios');
 
@@ -8,7 +9,8 @@ router.get('/', verify.user, async (req, res, next) => {
     try {
         const { include_deleted } = req.body;
         const reservations = await axios.db.get('/reservations', {
-            include_deleted
+            include_deleted,
+            is_confirmed: true,
         });
         res.send(reservations.data);
     } catch (error) {
@@ -23,6 +25,30 @@ router.post('/', verify.user, async (req, res, next) => {
             duration,
             date_reserved,
         } = req.body;
+        let ongoingReservations = await axios.db.get('/reservations', {
+            include_deleted: false,
+            is_confirmed: true,
+        });
+
+        ongoingReservations = ongoingReservations.data ? ongoingReservations.data : [];
+        ongoingReservations.map(r => {
+            if (
+                moment(date_reserved) >= moment(r.date_reserved)
+                && (
+                    moment(date_reserved) <=
+                    moment(r.date_reserved).add(r.duration, 'hours')
+                )
+                && r.service_id == service_id
+            ) {
+                throw new Error('Chosen time is unavailable');
+            }
+        })
+        console.log({
+            user_id: req.user.id,
+            service_id,
+            duration,
+            date_reserved,
+        });
         const reservation = await axios.db.post('/reservations', {
             user_id: req.user.id,
             service_id,
@@ -35,40 +61,40 @@ router.post('/', verify.user, async (req, res, next) => {
     }
 });
 
-router.patch('/', verify.user, async (req, res, next) => {
-    try {
-        const {
-            id,
-            user_id,
-            service_id,
-            duration,
-            date_reserved,
-        } = req.body;
-        const reservation = await axios.db.patch(`/reservations/${id}`, {
-            user_id,
-            service_id,
-            duration,
-            date_reserved,
-        });
-        res.send(reservation.data);
-    } catch (error) {
-        next(error);
-    }
-});
+// router.patch('/', verify.user, async (req, res, next) => {
+//     try {
+//         const {
+//             id,
+//             user_id,
+//             service_id,
+//             duration,
+//             date_reserved,
+//         } = req.body;
+//         const reservation = await axios.db.patch(`/reservations/${id}`, {
+//             user_id,
+//             service_id,
+//             duration,
+//             date_reserved,
+//         });
+//         res.send(reservation.data);
+//     } catch (error) {
+//         next(error);
+//     }
+// });
 
-router.delete('/', verify.user, async (req, res, next) => {
-    try {
-        const { ids } = req.body;
-        const deleted_reservations = await axios.db.delete('/reservations', {
-            data: {
-                ids,
-            },
-        });
+// router.delete('/', verify.user, async (req, res, next) => {
+//     try {
+//         const { ids } = req.body;
+//         const deleted_reservations = await axios.db.delete('/reservations', {
+//             data: {
+//                 ids,
+//             },
+//         });
 
-        res.send(deleted_reservations.data);
-    } catch (error) {
-        next(error);
-    }
-})
+//         res.send(deleted_reservations.data);
+//     } catch (error) {
+//         next(error);
+//     }
+// })
 
 module.exports = router;

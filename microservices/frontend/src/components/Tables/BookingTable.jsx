@@ -8,6 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import green from '@material-ui/core/colors/green';
 
 const styles = theme => ({
   root: {
@@ -20,7 +21,8 @@ const styles = theme => ({
   },
   cell: {
     textAlign: 'center',
-    backgroundColor: 'green',
+    backgroundColor: green[100],
+    borderColor: 'white',
   },
   cellTaken: {
     textAlign: 'center',

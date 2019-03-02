@@ -20,13 +20,17 @@ class ReservationHandler:
 
     def get_all_reservations(
             self,
-            include_deleted: bool = False
+            include_deleted: bool = False,
+            is_confirmed: bool = False,
     ) -> List[Reservation]:
         reservations = Reservation.query
         if not include_deleted:
             reservations = reservations.filter_by(
                 date_removed=None
             )
+        reservations = reservations.filter_by(
+            is_confirmed=is_confirmed
+        )
         return reservations.all()
     def create_reservation(
             self,

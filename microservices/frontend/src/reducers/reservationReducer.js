@@ -3,7 +3,7 @@ import reservationActions from '../actions/reservationActions';
 const { getReservationsRoutine, addReservationRoutine } = reservationActions;
 const initialState = {
   add: {
-    error: false,
+    error: null,
     loading: false,
     success: false,
   },
@@ -29,7 +29,7 @@ const reservationsReducer = (state = initialState, action) => {
         ...state,
         fetch: {
           loading: false,
-          error: false,
+          error: null,
           data: action.payload,
         },
       };
@@ -56,7 +56,7 @@ const reservationsReducer = (state = initialState, action) => {
         ...state,
         add: {
           loading: false,
-          error: false,
+          error: null,
           success: true,
         },
       };

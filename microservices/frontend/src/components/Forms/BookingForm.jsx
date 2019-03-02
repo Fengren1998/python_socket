@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment-timezone';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -8,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
+import green from '@material-ui/core/colors/green';
 
 const styles = theme => ({
   form: {
@@ -32,6 +34,9 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     marginTop: theme.spacing.unit * 5,
   },
+  success: {
+    color: green[500],
+  },
 });
 
 class BookingForm extends Component {
@@ -41,6 +46,8 @@ class BookingForm extends Component {
     this.state = {
       selectedService: 10,
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -49,7 +56,19 @@ class BookingForm extends Component {
   }
 
   handleSelect = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ selectedService: event.target.value });
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    const { addReservation } = this.props;
+
+    addReservation(
+      parseInt(event.target.service.value, 10),
+      parseInt(event.target.duration.value, 10),
+      moment(`${event.target.bookDate.value} ${event.target.startTime.value}`),
+    );
   }
 
   render() {
@@ -58,6 +77,8 @@ class BookingForm extends Component {
       handleDateChange,
       services,
       error,
+      success,
+      loading,
     } = this.props;
     const { selectedService } = this.state;
     return (
@@ -67,14 +88,15 @@ class BookingForm extends Component {
             {error}
           </Typography>
         )}
+        {success && (
+          <Typography className={classes.success} variant="subtitle2" gutterBottom>
+            Customer successfully added.
+          </Typography>
+        )}
         {services ? (
           <form
             className={classes.form}
-            onSubmit={
-              (e) => {
-                e.preventDefault();
-              }
-            }
+            onSubmit={e => this.handleSubmit(e)}
           >
             <FormControl className={classes.selectField}>
               <InputLabel shrink htmlFor="age-label-placeholder">
@@ -84,12 +106,12 @@ class BookingForm extends Component {
                 value={selectedService}
                 onChange={this.handleSelect}
                 inputProps={{
-                  name: 'selectedService',
+                  name: 'service',
                   id: 'service-id',
                 }}
                 fullWidth
               >
-                {services.map(service => <MenuItem value={service.id}>{service.name}</MenuItem>)}
+                {services.map(service => <MenuItem key={`service-${service.id}`} value={service.id}>{service.name}</MenuItem>)}
               </Select>
             </FormControl>
             <TextField
@@ -138,7 +160,7 @@ class BookingForm extends Component {
               fullWidth
               variant="contained"
               color="primary"
-              disabled={false}
+              disabled={loading}
             >
               Book
             </Button>
@@ -156,10 +178,13 @@ BookingForm.defaultProps = {
 
 BookingForm.propTypes = {
   classes: PropTypes.object.isRequired,
-  handleDateChange: PropTypes.func.isRequired,
-  getServices: PropTypes.func.isRequired,
   services: PropTypes.array,
   error: PropTypes.string,
+  success: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  handleDateChange: PropTypes.func.isRequired,
+  getServices: PropTypes.func.isRequired,
+  addReservation: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(BookingForm);
