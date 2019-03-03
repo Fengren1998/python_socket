@@ -29,31 +29,40 @@ class SchedulePage extends Component {
   constructor() {
     super();
     this.state = {
-      date: moment().format('YYYY-MM-DD'),
+      date: moment().add(1, 'hour').format('YYYY-MM-DD'),
+      selectedServiceId: 0,
     };
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleServiceChange = this.handleServiceChange.bind(this);
   }
 
   handleDateChange(date) {
     this.setState({ date: moment(date).format('YYYY-MM-DD') });
   }
 
+  handleServiceChange(id) {
+    this.setState({ selectedServiceId: id });
+  }
+
   render() {
     const { classes } = this.props;
-    const { date } = this.state;
+    const { date, selectedServiceId } = this.state;
     return (
       <div className={classes.layout}>
         <div className={classes.container}>
           <Typography className={classes.header} variant="h4">
             Book Your Space Now!
           </Typography>
-          <BookingForm handleDateChange={this.handleDateChange} />
+          <BookingForm
+            handleDateChange={this.handleDateChange}
+            handleServiceChange={this.handleServiceChange}
+          />
         </div>
         <div className={classes.container}>
           <Typography className={classes.header} variant="h4">
             Available Times
           </Typography>
-          <BookingTable date={date} />
+          <BookingTable date={date} selectedServiceId={selectedServiceId} />
         </div>
       </div>
     );

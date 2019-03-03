@@ -1,6 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
-from typing import List
+from typing import List, Optional
+from sqlalchemy.orm import joinedload
 from src.models.reservation import Reservation
 from src.models.service import Service
 from src.models.user import User
@@ -15,22 +16,29 @@ class ReservationHandler:
         reservation = Reservation.query.filter_by(
             id=id,
             date_removed=None
-        ).first()
+        ).join(User).join(Service).first()
         return reservation
 
     def get_all_reservations(
             self,
             include_deleted: bool = False,
-            is_confirmed: bool = False,
+            is_confirmed: Optional[bool] = None,
+            is_finished: Optional[bool] = None,
     ) -> List[Reservation]:
         reservations = Reservation.query
         if not include_deleted:
             reservations = reservations.filter_by(
                 date_removed=None
             )
-        reservations = reservations.filter_by(
-            is_confirmed=is_confirmed
-        )
+        if is_confirmed is not None:
+            reservations = reservations.filter_by(
+                is_confirmed=is_confirmed,
+            )
+        if is_finished is not None:
+            reservations = reservations.filter_by(
+                is_finished=is_finished,
+            )
+        reservations = reservations.join(User).join(Service)
         return reservations.all()
     def create_reservation(
             self,

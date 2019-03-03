@@ -8,6 +8,7 @@ import getServicesReducer from './getServicesReducer';
 import addCustomerReducer from './addCustomerReducer';
 import updateCustomerReducer from './updateCustomerReducer';
 import getCustomersReducer from './getCustomersReducer';
+import reservationReducer from './reservationReducer';
 
 const reducers = combineReducers({
   emailVerification: emailVerificationReducer,
@@ -19,6 +20,7 @@ const reducers = combineReducers({
   getCustomers: getCustomersReducer,
   addCustomer: addCustomerReducer,
   updateCustomer: updateCustomerReducer,
+  reservation: reservationReducer,
 });
 
 export default reducers;

@@ -1,4 +1,6 @@
 from marshmallow import Schema, fields
+from src.schemas.user import UserSchema
+from src.schemas.service import ServiceSchema
 
 
 class ReservationSchema(Schema):
@@ -11,3 +13,6 @@ class ReservationSchema(Schema):
     date_reserved = fields.DateTime(required=True)
     date_created = fields.DateTime()
     date_removed = fields.DateTime()
+
+    user = fields.Nested(UserSchema)
+    service = fields.Nested(ServiceSchema)

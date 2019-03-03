@@ -11,6 +11,7 @@ const mapStateToProps = (state, ownProps) => ({
   loading: getReservationsSelector(state).loading,
   error: getReservationsSelector(state).error,
   currentDate: ownProps.date,
+  selectedServiceId: ownProps.selectedServiceId,
 });
 
 const mapDispatchToProps = (dispach) => {

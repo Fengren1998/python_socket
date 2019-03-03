@@ -11,6 +11,7 @@ router.get('/', verify.user, async (req, res, next) => {
         const reservations = await axios.db.get('/reservations', {
             include_deleted,
             is_confirmed: true,
+            is_finished: false,
         });
         res.send(reservations.data);
     } catch (error) {
@@ -51,7 +52,7 @@ router.post('/', verify.user, async (req, res, next) => {
             ) {
                 throw new Error('Chosen time is unavailable');
             }
-        })
+        });
         const reservation = await axios.db.post('/reservations', {
             user_id: req.user.id,
             service_id,

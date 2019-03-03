@@ -40,17 +40,17 @@ function createData(time) {
 }
 
 const rows = [
-  createData('8:00 AM'),
-  createData('9:00 AM'),
+  createData('08:00 AM'),
+  createData('09:00 AM'),
   createData('10:00 AM'),
   createData('11:00 AM'),
   createData('12:00 PM'),
-  createData('1:00 PM'),
-  createData('2:00 PM'),
-  createData('3:00 PM'),
-  createData('4:00 PM'),
-  createData('5:00 PM'),
-  createData('6:00 PM'),
+  createData('01:00 PM'),
+  createData('02:00 PM'),
+  createData('03:00 PM'),
+  createData('04:00 PM'),
+  createData('05:00 PM'),
+  createData('06:00 PM'),
 ];
 
 class BookingTable extends Component {
@@ -64,6 +64,7 @@ class BookingTable extends Component {
       classes,
       reservations,
       currentDate,
+      selectedServiceId,
       error,
     } = this.props;
 
@@ -83,7 +84,11 @@ class BookingTable extends Component {
             <Table className={classes.table}>
               <TableBody>
                 {rows.map((row) => {
-                  const isTaken = reservationsInCurrentDate.find(r => moment(row.time) >= moment(r.date_reserved) && moment(row.time) < moment(r.date_reserved).add(30, 'm'));
+                  const isTaken = reservationsInCurrentDate.find(r => (
+                    moment(`${currentDate} ${row.time}`, 'YYYY-MM-DD HH:mm A') >= moment(r.date_reserved)
+                    && moment(`${currentDate} ${row.time}`, 'YYYY-MM-DD HH:mm A') < moment(r.date_reserved).add(1, 'hour')
+                    && r.service.id === selectedServiceId
+                  ));
                   return (
                     <TableRow key={row.id}>
                       <TableCell className={isTaken ? classes.cellTaken : classes.cell} component="th" scope="row">
@@ -110,6 +115,7 @@ BookingTable.propTypes = {
   getReservations: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   currentDate: PropTypes.string.isRequired,
+  selectedServiceId: PropTypes.number.isRequired,
   reservations: PropTypes.array,
   error: PropTypes.string,
 };

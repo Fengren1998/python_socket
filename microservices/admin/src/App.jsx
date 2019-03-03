@@ -10,13 +10,13 @@ import FourOhFourPage from './pages/FourOhFourPage';
 import LoginPage from './pages/LoginPage';
 import Navbar from './components/Navbars/DashboardNavbar';
 import RegisterPage from './pages/RegisterPage';
-import SchedulePage from './pages/SchedulePage';
 import ServicesPage from './pages/ServicesPage';
 import ServicesAddPage from './pages/ServicesAddPage';
 import ServicesUpdatePage from './pages/ServicesUpdatePage';
 import CustomersPage from './pages/CustomersPage';
 import CustomersAddPage from './pages/CustomersAddPage';
 import CustomersUpdatePage from './pages/CustomersUpdatePage';
+import ReservationsPage from './pages/ReservationsPage';
 
 const App = () => (
   <div className="App">
@@ -27,13 +27,13 @@ const App = () => (
           <UnauthenticatedRoute redirect="/services" path="/login" component={LoginPage} />
           <Route path="/register" component={RegisterPage} />
           <AuthenticatedRoute redirect="/login" path="/email-verification" component={EmailVerificationPage} />
-          <AuthenticatedRoute redirect="/login" path="/reservation" component={SchedulePage} />
           <AuthenticatedRoute redirect="/login" path="/services/add" component={ServicesAddPage} />
           <AuthenticatedRoute redirect="/login" path="/services/update" component={ServicesUpdatePage} />
           <AuthenticatedRoute redirect="/login" exact path="/services" component={ServicesPage} />
           <AuthenticatedRoute redirect="/login" path="/customers/add" component={CustomersAddPage} />
           <AuthenticatedRoute redirect="/login" path="/customers/update" component={CustomersUpdatePage} />
           <AuthenticatedRoute redirect="/login" exact path="/customers" component={CustomersPage} />
+          <AuthenticatedRoute redirect="/login" exact path="/reservations" component={ReservationsPage} />
           <Route component={FourOhFourPage} />
         </Switch>
       </Grid>

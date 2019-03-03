@@ -1,5 +1,8 @@
 from datetime import datetime
+from sqlalchemy.orm import relationship
 from src.db import db
+from src.models.user import User
+from src.models.service import Service
 
 
 class Reservation(db.Model):
@@ -12,3 +15,6 @@ class Reservation(db.Model):
     date_reserved=db.Column(db.DateTime(), nullable=False)
     date_created=db.Column(db.DateTime(), default=datetime.utcnow)
     date_removed=db.Column(db.DateTime())
+
+    user = relationship(User, lazy='joined')
+    service = relationship(Service, lazy='joined')

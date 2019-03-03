@@ -42,7 +42,7 @@ const Navbar = (props) => {
           <Link className={classes.linkButton} to="/services">
             <Button>Services</Button>
           </Link>
-          <Link className={classes.linkButton} to="/reservation">
+          <Link className={classes.linkButton} to="/reservations">
             <Button>Reservations</Button>
           </Link>
           <Link className={classes.linkButton} to="/login">

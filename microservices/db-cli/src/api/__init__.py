@@ -23,7 +23,7 @@ api.add_resource(Services, '/services')
 api.add_resource(Service, '/services/<int:id>')
 
 api.add_resource(Reservations, '/reservations')
-api.add_resource(Reservation, '/reservation/<int:id>')
+api.add_resource(Reservation, '/reservations/<int:id>')
 
 api.add_resource(ForgotPasswordHash, '/forgot-password-hash')
 api.add_resource(VerificationHash, '/verification-hash')

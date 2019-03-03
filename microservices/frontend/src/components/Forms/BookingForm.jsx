@@ -40,11 +40,11 @@ const styles = theme => ({
 });
 
 class BookingForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      selectedService: 10,
+      selectedService: 0,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -56,6 +56,8 @@ class BookingForm extends Component {
   }
 
   handleSelect = (event) => {
+    const { handleServiceChange } = this.props;
+    handleServiceChange(event.target.value);
     this.setState({ selectedService: event.target.value });
   }
 
@@ -114,6 +116,7 @@ class BookingForm extends Component {
                 }}
                 fullWidth
               >
+                <MenuItem value={0}>Choose a service</MenuItem>
                 {services.map(service => <MenuItem key={`service-${service.id}`} value={service.id}>{service.name}</MenuItem>)}
               </Select>
             </FormControl>
@@ -122,7 +125,7 @@ class BookingForm extends Component {
               id="date"
               label="Date"
               type="date"
-              defaultValue="2017-05-24"
+              defaultValue={moment().add(1, 'hour').format('YYYY-MM-DD')}
               className={classes.textField}
               InputLabelProps={{
                 shrink: true,
@@ -163,7 +166,7 @@ class BookingForm extends Component {
               fullWidth
               variant="contained"
               color="primary"
-              disabled={loading}
+              disabled={loading || selectedService === 0}
             >
               Book
             </Button>
@@ -186,6 +189,7 @@ BookingForm.propTypes = {
   success: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   handleDateChange: PropTypes.func.isRequired,
+  handleServiceChange: PropTypes.func.isRequired,
   getServices: PropTypes.func.isRequired,
   addReservation: PropTypes.func.isRequired,
 };
