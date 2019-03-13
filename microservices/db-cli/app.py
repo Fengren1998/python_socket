@@ -56,4 +56,3 @@ def handle_request_parsing_error(err, req, schema):
 if __name__ == '__main__':
     print('test db-cli app run')
     app.run(host='0.0.0.0', port='5001', debug=debug)
-    server_init()
