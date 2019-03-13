@@ -2,6 +2,7 @@ import time
 import socket
 from flask import Flask
 
+print('Initialized app.py...')
 
 app = Flask(__name__)
 
