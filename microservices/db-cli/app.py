@@ -4,7 +4,7 @@ from webargs.flaskparser import parser, abort
 from src.db import db
 from src.api import api
 
-from src.barcode.receiver import server_init
+#from src.barcode.receiver import server_init
 
 # APP Configuration
 app = Flask(__name__)
