@@ -3,10 +3,12 @@ import socket
 from flask import Flask
 
 
-app = Flask(__name__)
+#app = Flask(__name__)
 
-@app.route('/')
-def server_init():
+#@app.route('/')
+#def server_init():
+
+if __name__ == "__main__":
     print('Initializing barcode receiver...')
 
     HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
@@ -28,7 +30,3 @@ def server_init():
                         break
                     print(data.decode('utf-8'))
                     conn.sendall(data)
-
-if __name__ == "__main__":
-    print('Reached barcode app.py...')
-    app.run(host="0.0.0.0:6543", debug=True)
