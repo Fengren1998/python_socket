@@ -6,7 +6,7 @@ from flask import Flask
 app = Flask(__name__)
 
 @app.route('/')
-def server_init():
+def server_initialize():
     print('Initializing barcode receiver...')
 
     HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
@@ -31,4 +31,5 @@ def server_init():
 
 if __name__ == "__main__":
     print('Reached barcode app.py...')
+    server_initialize()
     app.run(host="0.0.0.0", debug=True)
