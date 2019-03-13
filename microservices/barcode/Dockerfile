@@ -10,4 +10,4 @@ RUN pip install -r requirements.txt
 
 ENTRYPOINT ["python"]
 
-CMD ["python", "app.py"]
+CMD ["app.py"]
