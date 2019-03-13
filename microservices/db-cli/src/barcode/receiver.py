@@ -9,6 +9,7 @@ def server_init():
     db_resrs = Reservations()
     db_resr = Reservation()
     while done == False:
+        print('Set up the receiver...')
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind((HOST, PORT))
             s.listen()
