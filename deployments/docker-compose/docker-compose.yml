@@ -73,7 +73,6 @@ services:
 
   barcode:
     build: ./../../microservices/barcode
-    image: barcode:1.0.0
     ports:
       - "6543:6543"
     volumes:
