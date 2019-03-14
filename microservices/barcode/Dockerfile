@@ -2,11 +2,11 @@ FROM python:3.7
 
 LABEL author="mikhail.agudo@gmail.com"
 
-ADD server.py ./
+ADD server.py /app
 
-COPY ./requirements.txt ./requirements.txt
+COPY ./requirements.txt /app/requirements.txt
 
-WORKDIR ./
+WORKDIR /app
 
 RUN pip install -r requirements.txt
 
