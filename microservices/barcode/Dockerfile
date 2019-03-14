@@ -2,8 +2,6 @@ FROM python:3.7
 
 LABEL author="mikhail.agudo@gmail.com"
 
-WORKDIR .
+WORKDIR barcode/
 
-ENTRYPOINT ["python3"]
-
-CMD ["server.py"]
+RUN python3 server.py
