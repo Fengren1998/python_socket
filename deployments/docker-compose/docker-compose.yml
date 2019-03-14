@@ -10,6 +10,11 @@ services:
       POSTGRES_USER: paperworkph-db-user
       POSTGRES_PASSWORD: password
 
+  barcode:
+    build: ./../../microservices/barcode
+    ports:
+      - "6543:6543"
+      
   db-cli:
     build: ./../../microservices/db-cli
     image: db-cli:1.0.0
@@ -71,12 +76,6 @@ services:
     volumes:
       - ./../../microservices/frontend:/app:rw
 
-  barcode:
-    build: ./../../microservices/barcode
-    ports:
-      - "6543:6543"
-    volumes:
-      - ./../../microservices/barcode:/code
 
 volumes:
   db-data:

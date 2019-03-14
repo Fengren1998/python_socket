@@ -2,9 +2,9 @@ FROM python:3.7
 
 LABEL author="mikhail.agudo@gmail.com"
 
-ADD . /code
+ADD server.py ./
 
-WORKDIR /code
+WORKDIR .
 
 RUN pip install -r requirements.txt
 
