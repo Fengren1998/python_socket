@@ -2,12 +2,8 @@ FROM python:3.7
 
 LABEL author="mikhail.agudo@gmail.com"
 
-ADD server.py .
-
-COPY ./requirements.txt .
-
 WORKDIR .
 
-RUN pip install -r requirements.txt
+ENTRYPOINT ["python3"]
 
-CMD python3 server.py
+CMD ["server.py"]
