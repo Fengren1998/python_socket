@@ -2,8 +2,10 @@ FROM python:3.7
 
 LABEL author="mikhail.agudo@gmail.com"
 
-WORKDIR barcode/
+WORKDIR /build
 
-ENTRYPOINT ["python3, "server.py"]
+COPY . /build
 
-CMD ["python"]
+ENTRYPOINT ["python3"]
+
+CMD ["server.py"]
