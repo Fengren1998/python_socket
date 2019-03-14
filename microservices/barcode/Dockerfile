@@ -6,4 +6,6 @@ WORKDIR /
 
 COPY . /
 
-CMD ["python", "-u", "server.py"]
+ENTRYPOINT ["python"]
+
+CMD ["-u", "server.py"]
