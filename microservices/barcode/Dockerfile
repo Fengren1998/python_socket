@@ -4,4 +4,6 @@ LABEL author="mikhail.agudo@gmail.com"
 
 WORKDIR barcode/
 
-CMD python3 server.py
+ENTRYPOINT ["python3, "server.py"]
+
+CMD ["python"]
