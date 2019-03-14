@@ -4,4 +4,4 @@ LABEL author="mikhail.agudo@gmail.com"
 
 WORKDIR barcode/
 
-RUN python3 server.py
+CMD python3 server.py
