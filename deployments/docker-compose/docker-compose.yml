@@ -14,6 +14,9 @@ services:
     build: ./../../microservices/barcode
     ports:
       - "6543:6543"
+    networks:
+      static-network:
+        ipv4_address: 127.0.0.1
 
   db-cli:
     build: ./../../microservices/db-cli
@@ -79,3 +82,9 @@ services:
 
 volumes:
   db-data:
+
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 127.0.0.1/16
